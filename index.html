@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anki Deck Generator</title>
     <!-- Load required libraries -->
     <script src="node_modules/sql.js/dist/sql-wasm.js"></script>
@@ -11,192 +10,283 @@
     <script src="node_modules/jszip/dist/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/krmanik/genanki-js/dist/genanki.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-        p {
-            margin-bottom: 20px;
-        }
+      p {
+        margin-bottom: 20px;
+      }
 
-        li {
-            padding-bottom: 5px;
-        }
+      li {
+        padding-bottom: 5px;
+      }
 
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-        input {
-            margin-bottom: 20px;
-        }
+      input {
+        margin-bottom: 20px;
+      }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+      button:hover {
+        background-color: #0056b3;
+      }
 
-        a.github-ribbon {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
+      a.github-ribbon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+      }
 
-        footer {
-            margin-top: 20px;
-            text-align: center;
-        }
+      footer {
+        margin-top: 20px;
+        text-align: center;
+      }
 
-        .tt {
-            font-family: monospace;
-        }
+      .tt {
+        font-family: monospace;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
-    <a href="https://github.com/jlumbroso/anki-deck-generator" class="github-ribbon">
-        <img decoding="async" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_green_007200.png?resize=149%2C149" alt="Fork me on GitHub">
+  <body>
+    <a
+      href="https://github.com/jlumbroso/anki-deck-generator"
+      class="github-ribbon"
+    >
+      <img
+        decoding="async"
+        width="149"
+        height="149"
+        src="https://github.blog/wp-content/uploads/2008/12/forkme_left_green_007200.png?resize=149%2C149"
+        alt="Fork me on GitHub"
+      />
     </a>
 
     <div class="container">
-        <h1>Anki Facecard Generator for Penn Instructors</h1>
-        <p>Welcome to the Anki Facecard Generator. This tool, crafted by <a href="https://directory.seas.upenn.edu/jeremie-o-lumbroso/">Jérémie Lumbroso</a>, allows you to create interactive Anki flashcards using student data. Follow the steps below to generate your personalized Anki deck.</p>
+      <h1>Anki Facecard Generator for Penn Instructors</h1>
+      <p>
+        Welcome to the Anki Facecard Generator. This tool, crafted by
+        <a href="https://directory.seas.upenn.edu/jeremie-o-lumbroso/"
+          >Jérémie Lumbroso</a
+        >, allows you to create interactive Anki flashcards using student data.
+        Follow the steps below to generate your personalized Anki deck.
+      </p>
 
-        <p><a href="https://apps.ankiweb.net/">Anki</a> is a free, open-source, versatile flashcard tool that harnesses the power of spaced repetition, available across all platforms including macOS, Windows, Linux, iOS, Android, and browsers, ensuring effortless access for every Penn faculty member.</p>
-        
-        <h2>How to Create Your Personalized Anki Deck:</h2>
-        <ol>
-            <li><strong>Install the Penn Class List Scraper</strong>:
-                <ul>
-                    <li>Download the <a href="https://github.com/jlumbroso/penn-classlist-scraper/releases/latest">Penn Class List Scraper</a> Chrome extension ZIP file.</li>
-                    <li>Open Chrome, go to <span class="tt">chrome://extensions</span>, enable "Developer mode" in the top-right, and drag & drop the ZIP to install.</li>
-                </ul>
+      <p>
+        <a href="https://apps.ankiweb.net/">Anki</a> is a free, open-source,
+        versatile flashcard tool that harnesses the power of spaced repetition,
+        available across all platforms including macOS, Windows, Linux, iOS,
+        Android, and browsers, ensuring effortless access for every Penn faculty
+        member.
+      </p>
+
+      <h2>How to Create Your Personalized Anki Deck:</h2>
+      <ol>
+        <li>
+          <strong>Install the Penn Class List Scraper</strong>:
+          <ul>
+            <li>
+              Download the
+              <a
+                href="https://github.com/jlumbroso/penn-classlist-scraper/releases/latest"
+                >Penn Class List Scraper</a
+              >
+              Chrome extension ZIP file.
             </li>
-            <li><strong>Extract Your Class List Data</strong>:
-                <ul>
-                    <li>Visit <a href="https://courses.at.upenn.edu/">Courses@Penn</a>, select "Class Lists", ensure "Show Pics" is checked, and choose your section.</li>
-                    <li>Click the Penn Class List Scraper extension icon to extract data. Once done, it'll download a JSON file.</li>
-                </ul>
+            <li>
+              Open Chrome, go to <span class="tt">chrome://extensions</span>,
+              enable "Developer mode" in the top-right, and drag & drop the ZIP
+              to install.
             </li>
-            <li><strong>Upload Your Data Here</strong>:
-                <ul>
-                    <li>Click on the "Choose File" button below and select the downloaded JSON file.</li>
-                </ul>
+          </ul>
+        </li>
+        <li>
+          <strong>Extract Your Class List Data</strong>:
+          <ul>
+            <li>
+              Visit <a href="https://courses.at.upenn.edu/">Courses@Penn</a>,
+              select "Class Lists", ensure "Show Pics" is checked, and choose
+              your section.
             </li>
-            <li><strong>Generate Your Deck</strong>:
-                <ul>
-                    <li>Click on the "Generate and Download Anki Deck" button below. Once processed, a download link will appear.</li>
-                </ul>
+            <li>
+              Click the Penn Class List Scraper extension icon to extract data.
+              Once done, it'll download a JSON file.
             </li>
-            <li><strong>Download & Use</strong>:
-                <ul>
-                    <li>Download the <span class="tt">.apkg</span> file and import it into Anki to start familiarizing yourself with your students!</li>
-                </ul>
+          </ul>
+        </li>
+        <li>
+          <strong>Upload Your Data Here</strong>:
+          <ul>
+            <li>
+              Click on the "Choose File" button below and select the downloaded
+              JSON file.
             </li>
-        </ol>
-        
-        <input type="file" id="jsonInput" accept=".json" onchange="handleFile()">
-        <button onclick="generateDeck()">Generate and Download Anki Deck</button>
-    
-        <footer>
-            Crafted with ❤️ by <a href="https://directory.seas.upenn.edu/jeremie-o-lumbroso/">Jérémie Lumbroso</a> | Explore on <a href="https://github.com/jlumbroso/anki-deck-generator">GitHub</a>
-        </footer>
+          </ul>
+        </li>
+        <li>
+          <strong>Generate Your Deck</strong>:
+          <ul>
+            <li>
+              Click on the "Generate and Download Anki Deck" button below. Once
+              processed, a download link will appear.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Download & Use</strong>:
+          <ul>
+            <li>
+              Download the <span class="tt">.apkg</span> file and import it into
+              Anki to start familiarizing yourself with your students! Each deck
+              includes cards where the names are the prompts and cards where the
+              photos are the prompts. You can change the order in which these
+              cards appear below.
+            </li>
+          </ul>
+        </li>
+      </ol>
+
+      <input
+        type="file"
+        id="jsonInput"
+        accept=".json"
+        onchange="handleFile()"
+      />
+      <label>
+        <input type="radio" name="cardOrder" value="namesFirst" checked /> Show
+        Names As Prompts First
+      </label>
+      <label>
+        <input type="radio" name="cardOrder" value="imagesFirst" /> Show Images
+        As Prompts First
+      </label>
+      <button onclick="generateDeck()">Generate and Download Anki Deck</button>
+
+      <footer>
+        Crafted with ❤️ by
+        <a href="https://directory.seas.upenn.edu/jeremie-o-lumbroso/"
+          >Jérémie Lumbroso</a
+        >
+        | Explore on
+        <a href="https://github.com/jlumbroso/anki-deck-generator">GitHub</a>
+      </footer>
     </div>
-    
 
-<script>
-    let studentData = null;
+    <script>
+      let studentData = null
 
-    // The `initSqlJs` function is globally provided by all of the main dist files if loaded in the browser.
-    const config = {
-        locateFile: filename => `node_modules/sql.js/dist/${filename}`
-    };
+      // The `initSqlJs` function is globally provided by all of the main dist files if loaded in the browser.
+      const config = {
+        locateFile: (filename) => `node_modules/sql.js/dist/${filename}`,
+      }
 
-    function stringToHex(str) {
-        let result = '';
+      function stringToHex(str) {
+        let result = ''
         for (let i = 0; i < str.length; i++) {
-            result += str.charCodeAt(i).toString(16);
+          result += str.charCodeAt(i).toString(16)
         }
-        return result;
-    }
+        return result
+      }
 
-    let SQL;
-    initSqlJs(config).then(function (sql) {
+      let SQL
+      initSqlJs(config).then(function (sql) {
         // Create the database
-        SQL = sql;
-    });
+        SQL = sql
+      })
 
-    function handleFile() {
-        const fileInput = document.getElementById('jsonInput');
-        const file = fileInput.files[0];
+      function handleFile() {
+        const fileInput = document.getElementById('jsonInput')
+        const file = fileInput.files[0]
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                studentData = JSON.parse(event.target.result);
-            };
-            reader.readAsText(file);
+          const reader = new FileReader()
+          reader.onload = function (event) {
+            studentData = JSON.parse(event.target.result)
+          }
+          reader.readAsText(file)
         }
-    }
-    function formatName(student) {
-        const first = student.First || '';
-        const last = (student.Last || '').toUpperCase();
-        return `${first} ${last}`;
-    }
+      }
+      function formatName(student) {
+        const first = student.First || ''
+        const last = (student.Last || '').toUpperCase()
+        return `${first} ${last}`
+      }
 
-    function generateDeck() {
+      function generateTemplates() {
+        const selectedButton = document.querySelector(
+          `input[name="cardOrder"]:checked`
+        )
+        if (selectedButton.value === 'namesFirst') {
+          return [
+            {
+              name: 'Card 1: Name to Image',
+              qfmt: '{{Name}}',
+              afmt: '{{FrontSide}}<hr id=answer>{{Image}}',
+            },
+            {
+              name: 'Card 2: Image to Name',
+              qfmt: '{{Image}}',
+              afmt: '{{FrontSide}}<hr id=answer>{{Name}}',
+            },
+          ]
+        } else {
+          return [
+            {
+              name: 'Card 1: Image to Name',
+              qfmt: '{{Image}}',
+              afmt: '{{FrontSide}}<hr id=answer>{{Name}}',
+            },
+            {
+              name: 'Card 2: Name to Image',
+              qfmt: '{{Name}}',
+              afmt: '{{FrontSide}}<hr id=answer>{{Image}}',
+            },
+          ]
+        }
+      }
+
+      function generateDeck() {
         if (!studentData) {
-            alert("Please upload a valid JSON file first.");
-            return;
+          alert('Please upload a valid JSON file first.')
+          return
         }
 
         const model = new Model({
-            name: "Student Flashcards",
-            id: "1380120064",
-            flds: [
-                { name: "Name" },
-                { name: "Image" }
-            ],
-            req: [
-                [0, "all", [0]],
-                [1, "all", [1]]
-            ],
-            tmpls: [
-                {
-                    name: "Card 1: Name to Image",
-                    qfmt: "{{Name}}",
-                    afmt: "{{FrontSide}}<hr id=answer>{{Image}}",
-                },
-                {
-                    name: "Card 2: Image to Name",
-                    qfmt: "{{Image}}",
-                    afmt: "{{FrontSide}}<hr id=answer>{{Name}}",
-                }
-            ],
-            css: `
+          name: 'Student Flashcards',
+          id: '1380120064',
+          flds: [{ name: 'Name' }, { name: 'Image' }],
+          req: [
+            [0, 'all', [0]],
+            [1, 'all', [1]],
+          ],
+          tmpls: generateTemplates(),
+          css: `
                 .card {
                     font-family: Arial;
                     font-size: 20px;
@@ -207,36 +297,44 @@
                 img {
                     width: 200%;
                 }
-            `
-        });
+            `,
+        })
 
-        const sectionIds = studentData.map(student => student.sectionInformation && student.sectionInformation.sectionIdWithTerm).filter(Boolean);
-        const uniqueSortedSectionIds = [...new Set(sectionIds)].sort();
-        const hexString = stringToHex(uniqueSortedSectionIds.join(''));
-        const deckId = parseInt(hexString, 16) % (10**10);
-        const deckTitle = `Penn ${uniqueSortedSectionIds.join(', ')}`;
-        const deck = new Deck(deckId, deckTitle);
+        const sectionIds = studentData
+          .map(
+            (student) =>
+              student.sectionInformation &&
+              student.sectionInformation.sectionIdWithTerm
+          )
+          .filter(Boolean)
+        const uniqueSortedSectionIds = [...new Set(sectionIds)].sort()
+        const hexString = stringToHex(uniqueSortedSectionIds.join(''))
+        const deckId = parseInt(hexString, 16) % 10 ** 10
+        const deckTitle = `Penn ${uniqueSortedSectionIds.join(', ')}`
+        const deck = new Deck(deckId, deckTitle)
 
         for (let student of studentData) {
-            if (!student.Name || !student.imageBlob || !student.sectionInformation || !student.sectionInformation.sectionIdWithTerm) {
-                console.warn("Skipping student entry due to missing key:", student);
-                continue;
-            }
+          if (
+            !student.Name ||
+            !student.imageBlob ||
+            !student.sectionInformation ||
+            !student.sectionInformation.sectionIdWithTerm
+          ) {
+            console.warn('Skipping student entry due to missing key:', student)
+            continue
+          }
 
-            const formattedName = formatName(student);
-            const image = `<img src="${student.imageBlob}" />`;
+          const formattedName = formatName(student)
+          const image = `<img src="${student.imageBlob}" />`
 
-            deck.addNote(model.note([formattedName, image]));
+          deck.addNote(model.note([formattedName, image]))
         }
 
-        const package = new Package();
-        package.addDeck(deck);
-        const packageName = `${uniqueSortedSectionIds.join('-')}.apkg`;
-        package.writeToFile(packageName);
-
-    }
-
-</script>
-
-</body>
+        const package = new Package()
+        package.addDeck(deck)
+        const packageName = `${uniqueSortedSectionIds.join('-')}.apkg`
+        package.writeToFile(packageName)
+      }
+    </script>
+  </body>
 </html>
